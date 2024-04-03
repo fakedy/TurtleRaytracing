@@ -21,15 +21,16 @@ public class Renderer extends JFrame{
 
     Renderer(){
 
-
+        super();
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 
-        aspectRatio = (float) this.getWidth() /this.getHeight();
+        aspectRatio = (float) this.getWidth() / (float)this.getHeight(); // sometimes height or width is 0...
 
 
         spheres.add(new Sphere(new Vector3(0,0,0),0.5f, new Vector3(255,0,255)));
+        spheres.add(new Sphere(new Vector3(-1f,0,0),0.5f, new Vector3(255,80,20)));
 
 
     }
@@ -51,11 +52,14 @@ public class Renderer extends JFrame{
     @Override
     public void paint(Graphics g){
 
+
         if(finished)
             return;
 
-        for(int y = 0; y < this.getSize().height; y++){
-            for(int x = 0; x < this.getSize().width; x++){
+        aspectRatio = (float) this.getWidth() / (float)this.getHeight();
+
+        for(int y = 0; y < this.getHeight(); y++){
+            for(int x = 0; x < this.getWidth(); x++){
                 Vector3 cvec = traceRay(
                         ((float)x/(this.getWidth()) * 2f - 1f)*aspectRatio,
                            ((float)y/(this.getHeight()) * 2f - 1f));
@@ -72,21 +76,38 @@ public class Renderer extends JFrame{
 
     private Vector3 traceRay(float x, float y){
 
-        Sphere sphere = spheres.get(0);
+        for(int i = 0; i < spheres.size(); i++){
 
-        Vector3 rayDir = new Vector3(x,y, -1);
+            Vector3 rayDir = new Vector3(x,y, -1);
 
-        float a = dot(rayDir, rayDir);
-        float b = 2.0f * dot(cameraPos, rayDir);
-        float c = dot(cameraPos, cameraPos) - sphere.radius*sphere.radius;
+            Vector3 adjustedCameraPos = cameraPos.subSafe(spheres.get(i).position);
+            float a = dot(rayDir, rayDir);
+            float b = 2.0f * dot(adjustedCameraPos, rayDir);
+            float c = dot(adjustedCameraPos, adjustedCameraPos) - spheres.get(i).radius* spheres.get(i).radius;
 
-        float discriminant = b*b -4.0f * a * c;
+            float discriminant = b*b -4.0f * a * c;
 
-        if(discriminant >= 0f)
-            return sphere.color;
+            float t1 = (float) ((-b - Math.sqrt(discriminant)) / (2.0f * a));
 
+            Vector3 hitpos = new Vector3(adjustedCameraPos.x+rayDir.x*t1,
+                    adjustedCameraPos.y+rayDir.y*t1,
+                    adjustedCameraPos.z+rayDir.z*t1);
+
+            if(discriminant >= 0)
+                return getRGB(hitpos);
+
+        }
         return bgColor;
 
+    }
+
+    Vector3 getRGB(Vector3 vec){
+
+        vec.r = ((vec.r+1)/2)*255;
+        vec.g = ((vec.g+1)/2);
+        vec.b = ((vec.b+1)/2)*255;
+
+        return vec;
     }
 
 
