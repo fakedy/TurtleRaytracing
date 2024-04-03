@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c55e202f-4afc-4a9d-8cdf-7a3740056873" name="Changes" comment=":)">
+    <list default="true" id="c55e202f-4afc-4a9d-8cdf-7a3740056873" name="Changes" comment="Expanded TurtleMath.&#10;Multiple spheres.&#10;Full distance calculation.&#10;There is need of refactoring.">
+      <change afterPath="$PROJECT_DIR$/src/Camera.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TurtleMath/LookAt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TurtleMath/Mat4.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TurtleMath/Projection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TurtleMath/Vector2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Renderer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TurtleMath/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TurtleMath/Vector3.java" afterDir="false" />
@@ -95,12 +100,21 @@
       <option name="project" value="LOCAL" />
       <updated>1712095860778</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Expanded TurtleMath.&#10;Multiple spheres.&#10;Full distance calculation.&#10;There is need of refactoring.">
+      <option name="closed" value="true" />
+      <created>1712140486409</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1712140486409</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value=":)" />
-    <option name="LAST_COMMIT_MESSAGE" value=":)" />
+    <MESSAGE value="Expanded TurtleMath.&#10;Multiple spheres.&#10;Full distance calculation.&#10;There is need of refactoring." />
+    <option name="LAST_COMMIT_MESSAGE" value="Expanded TurtleMath.&#10;Multiple spheres.&#10;Full distance calculation.&#10;There is need of refactoring." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

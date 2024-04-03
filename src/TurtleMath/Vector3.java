@@ -1,6 +1,5 @@
 package TurtleMath;
 
-import java.util.Vector;
 
 public class Vector3{
 
