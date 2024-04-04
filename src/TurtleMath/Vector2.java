@@ -7,8 +7,8 @@ public class Vector2 {
         this.x = x;
         this.y = y;
 
-        this.r = x;
-        this.g = y;
+        this.r = this.x;
+        this.g = this.y;
     }
 
     public Float x;

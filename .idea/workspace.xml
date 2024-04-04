@@ -4,14 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c55e202f-4afc-4a9d-8cdf-7a3740056873" name="Changes" comment="Expanded TurtleMath.&#10;Multiple spheres.&#10;Full distance calculation.&#10;There is need of refactoring.">
-      <change afterPath="$PROJECT_DIR$/src/Camera.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TurtleMath/LookAt.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TurtleMath/Mat4.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TurtleMath/Projection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/TurtleMath/Vector2.java" afterDir="false" />
+    <list default="true" id="c55e202f-4afc-4a9d-8cdf-7a3740056873" name="Changes" comment="Creating my own math library is starting to become very painful.">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/joml.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Ray.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/TurtleMath/Vector4.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TurtleRaytracing.iml" beforeDir="false" afterPath="$PROJECT_DIR$/TurtleRaytracing.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Camera.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Renderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TurtleMath/Mat4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TurtleMath/Mat4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TurtleMath/Vector2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TurtleMath/Vector2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TurtleMath/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TurtleMath/Vector3.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,9 +49,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Modules",
+    "last_opened_file_path": "/home/fakedy/Documents/java/Libs/joml/joml-1.10.5.jar",
+    "project.structure.last.edited": "Global Libraries",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RunManager">
@@ -108,13 +113,22 @@
       <option name="project" value="LOCAL" />
       <updated>1712140486409</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Creating my own math library is starting to become very painful.">
+      <option name="closed" value="true" />
+      <created>1712174545522</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1712174545522</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value=":)" />
     <MESSAGE value="Expanded TurtleMath.&#10;Multiple spheres.&#10;Full distance calculation.&#10;There is need of refactoring." />
-    <option name="LAST_COMMIT_MESSAGE" value="Expanded TurtleMath.&#10;Multiple spheres.&#10;Full distance calculation.&#10;There is need of refactoring." />
+    <MESSAGE value="Creating my own math library is starting to become very painful." />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating my own math library is starting to become very painful." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

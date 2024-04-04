@@ -19,4 +19,13 @@ public class Mat4 {
         // TODO: everything....
         return this;
     }
+
+    public Vector4 safeMul(Vector4 vector4) {
+
+        // TODO: Matrix multiplication with vec4...
+
+
+
+        return new Vector4(0,0,0,0);
+    }
 }
