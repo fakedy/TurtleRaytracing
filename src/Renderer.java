@@ -69,7 +69,7 @@ public class Renderer extends JPanel{
                 Vector3f cvec = rayGen(x, y);
                 Color color = new Color((int)cvec.x, (int)cvec.y, (int)cvec.z);
                 g.setColor(color);
-                g.drawRect(x,y,1,1);
+                g.fillRect(x,y,1,1);
             }
         }
 
