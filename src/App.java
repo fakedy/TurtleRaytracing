@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.WindowListener;
 
 public class App extends JFrame {
 
@@ -15,18 +18,24 @@ public class App extends JFrame {
         renderer.isOptimizedDrawingEnabled();
         this.setVisible(true);
 
-        while(true){
-            update();
-        }
+        this.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                update();
+            }
+        });
     }
 
 
     void update(){
-        if(this.getWidth() == 0)
-            return;
+        System.out.println("resize callback");
         renderer.newSizeX = this.getWidth();
         renderer.newSizeY = this.getHeight();
+        renderer.shouldResize();
 
     }
+
+
 
 }

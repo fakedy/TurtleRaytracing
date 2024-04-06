@@ -10,18 +10,16 @@ public class Renderer extends JPanel{
 
     public int newSizeX;
     public int newSizeY;
-    ArrayList<Sphere> spheres = new ArrayList<>();
+    private ArrayList<Sphere> spheres = new ArrayList<>();
 
-    Vector3d bgColor = new Vector3d(0,0,0); // 255
-    Vector3d cameraPos = new Vector3d(0,0, 6);
+    private Vector3d bgColor = new Vector3d(0,0,0); // 255
+    private Vector3d cameraPos = new Vector3d(0,0, 6);
 
-    Vector3d lightDir = new Vector3d(-1, 1, -1);
+    private Vector3d lightDir = new Vector3d(-1, 1, -1);
 
-    boolean finished = false;
+    private float aspectRatio;
 
-    float aspectRatio;
-
-    Camera camera; // TODO: camera should not be in the renderer
+    private Camera camera; // TODO: camera should not be in the renderer
 
     private int viewPortSizeX;
     private int viewPortSizeY;
@@ -50,25 +48,21 @@ public class Renderer extends JPanel{
         Vector3d position;
         float radius;
         Vector3d color;
-
-        float roughness = 0.4f;
+        float roughness = 0.1f;
         float metallic = 0.0f;
-
 
         Sphere(Vector3d position, float radius, Vector3d color){
             this.position = position;
             this.radius = radius;
             this.color = color;
         }
-
-
     }
+
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        if(finished)
-            return;
+        long startTime = System.currentTimeMillis();
 
         for(int y = 0; y < viewPortSizeY; y++){
             for(int x = 0; x < viewPortSizeX; x++){
@@ -78,15 +72,22 @@ public class Renderer extends JPanel{
                 g.drawRect(x,y,1,1);
             }
         }
-        //finished = true;
 
-        viewPortSizeX = newSizeX;
-        viewPortSizeY = newSizeY;
-
-        aspectRatio = (float)viewPortSizeX / (float)viewPortSizeY;
-        camera.updateCamera(aspectRatio, viewPortSizeX, viewPortSizeY);
+        long endTime = System.currentTimeMillis();
+        long elapsed = endTime - startTime;
+        g.setColor(Color.GREEN);
+        g.setFont(new Font(g.getFont().getFontName(), Font.PLAIN, 20));
+        g.drawString(String.valueOf(elapsed) + " ms", 20, 20);
         repaint();
     }
+
+    public void shouldResize(){
+        viewPortSizeX = newSizeX;
+        viewPortSizeY = newSizeY;
+        aspectRatio = (float)viewPortSizeX / (float)viewPortSizeY;
+        camera.updateCamera(aspectRatio, viewPortSizeX, viewPortSizeY);
+    }
+
 
     private Vector3f rayGen(int x, int y){
 
@@ -109,11 +110,10 @@ public class Renderer extends JPanel{
             sphereColor = sphereColor.mul(lightStrength, new Vector3d());
             finalColor.add(sphereColor.mul(energy,new Vector3d()));
 
-
             energy *= 0.7f;
             ray.origin = load.hitPosition.add(load.normal.mul(0.0001, new Vector3d()));
             Vector3d randomVec = new Vector3d(1 - Math.random()*load.sphere.roughness,1 - Math.random()*load.sphere.roughness,1 - Math.random()*load.sphere.roughness);
-            ray.direction = ray.direction.reflect(randomVec.mul(load.normal));
+            ray.direction = ray.direction.reflect(randomVec.mul(load.normal), new Vector3d());
         }
 
         return getRGB(finalColor);
@@ -123,7 +123,7 @@ public class Renderer extends JPanel{
     private HitPayload traceRay(Ray ray){
 
         Sphere closestSphere = null;
-        float hitDistance = 1000000000;
+        float hitDistance = 1000000000; // float max is better
 
         Vector3d rayDir = ray.direction;
         for(int i = 0; i < spheres.size(); i++){
@@ -151,23 +151,15 @@ public class Renderer extends JPanel{
             return miss(ray);
         }
 
-
         return closestHit(ray, hitDistance, closestSphere);
-
-
     }
 
     private class HitPayload{
-
         float hitDistance;
-
         Vector3d normal;
         Vector3d hitPosition;
-
         Vector3d color;
-
         Sphere sphere;
-
     }
 
 
@@ -175,7 +167,6 @@ public class Renderer extends JPanel{
     private HitPayload closestHit(Ray ray, float hitDistance, Sphere closestSphere){
 
         Vector3d adjustedCameraPos = ray.origin.sub(closestSphere.position, new Vector3d()); // current way of moving spheres
-
 
         HitPayload load = new HitPayload();
         load.sphere = closestSphere;
@@ -201,5 +192,4 @@ public class Renderer extends JPanel{
 
         return new Vector3f((float) vec.x, (float) vec.y, (float) vec.z);
     }
-
 }
