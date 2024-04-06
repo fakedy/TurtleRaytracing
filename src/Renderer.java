@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.joml.Vector3d;
 import org.joml.Vector3f;
@@ -13,7 +12,7 @@ public class Renderer extends JPanel{
     public int newSizeY;
     private ArrayList<Sphere> spheres = new ArrayList<>();
 
-    private Vector3d bgColor = new Vector3d(0,0,0); // 255
+    private Vector3d bgColor = new Vector3d(50,20,20); // 255
     private Vector3d cameraPos = new Vector3d(0,0, 6);
 
     private Vector3d lightDir = new Vector3d(-1, 1, -1);
@@ -41,28 +40,45 @@ public class Renderer extends JPanel{
             accumilatedImage[i] = new Vector3f(0);
         }
 
+        Material material1 = new Material(new Vector3d(20,20,20), 0.0f, 0.0f, 0.0f);
+        Material material2 = new Material(new Vector3d(255,0,255), 0.3f, 0.0f, 0.0f);
+        Material material3 = new Material(new Vector3d(100,255,100), 1.0f, 0.0f, 0.0f);
+        Material material4 = new Material(new Vector3d(100,255,0), 1.0f, 0.0f, 0.0f);
+
         // should create scene class to store objects to be rendered.
-        spheres.add(new Sphere(new Vector3d(-5,-5.0,0.0),4.6f, new Vector3d(255,77,0)));
-        spheres.add(new Sphere(new Vector3d(0,5.0,0.0),4.6f, new Vector3d(51,77,255)));
-        spheres.add(new Sphere(new Vector3d(0,0, 0.0),0.5f, new Vector3d(255,0,255)));
-        spheres.add(new Sphere(new Vector3d(1.5,-0.5,0.2),0.5f, new Vector3d(255,140,0)));
-        spheres.add(new Sphere(new Vector3d(-1.5,-0.5,0.2),0.5f, new Vector3d(255,140,0)));
-        spheres.add(new Sphere(new Vector3d(-10,0,-50),25f, new Vector3d(255,255,80)));
-        spheres.add(new Sphere(new Vector3d(10,0,-25),13f, new Vector3d(20,180,80)));
+        spheres.add(new Sphere(new Vector3d(-5,-5.0,0.0),4.6f, material2));
+        spheres.add(new Sphere(new Vector3d(0,5.0,0.0),4.6f, material2));
+        spheres.add(new Sphere(new Vector3d(0,0, 0.0),0.5f, material1));
+        spheres.add(new Sphere(new Vector3d(1.5,-0.5,0.2),0.5f, material3));
+        spheres.add(new Sphere(new Vector3d(-1.5,-0.5,0.2),0.5f, material1));
+        spheres.add(new Sphere(new Vector3d(-10,0,-50),25f, material4));
+        spheres.add(new Sphere(new Vector3d(10,0,-25),13f, material3));
         this.setVisible(true);
     }
 
     public class Sphere{
         Vector3d position;
         float radius;
-        Vector3d color;
-        float roughness = 0.3f;
-        float metallic = 0.0f;
-
-        Sphere(Vector3d position, float radius, Vector3d color){
+        Material material;
+        Sphere(Vector3d position, float radius, Material mat){
             this.position = position;
             this.radius = radius;
-            this.color = color;
+            this.material = mat;
+        }
+    }
+
+    public class Material{
+        Vector3d albedo;
+        float roughness;
+        float metallic;
+
+        float translucancy;
+
+        Material(Vector3d albedo, float roughness, float metallic, float translucancy){
+            this.albedo = albedo;
+            this.roughness = roughness;
+            this.metallic = metallic;
+            this.translucancy = translucancy;
         }
     }
 
@@ -74,6 +90,7 @@ public class Renderer extends JPanel{
 
         long startTime = System.currentTimeMillis();
 
+        // TODO: multithreading
         for(int y = 0; y < viewPortSizeY; y++){
             for(int x = 0; x < viewPortSizeX; x++){
 
@@ -84,7 +101,7 @@ public class Renderer extends JPanel{
                 Vector3f stored = accumilatedImage[pixelIndex];
                 stored = stored.div(frameIndex, new Vector3f());
 
-                Color color = new Color((int)stored.x, (int)stored.y, (int)stored.z);
+                Color color = new Color((int)stored.x, (int)stored.y, (int)stored.z, 255);
                 g.setColor(color);
                 g.fillRect(x,y,1,1);
             }
@@ -130,7 +147,7 @@ public class Renderer extends JPanel{
             }
 
             double lightStrength = Math.max(load.normal.dot(lightDir.mul(-1, new Vector3d())), 0.0);
-            Vector3d sphereColor = load.sphere.color;
+            Vector3d sphereColor = load.sphere.material.albedo;
             sphereColor = sphereColor.mul(lightStrength, new Vector3d());
             finalColor.add(sphereColor.mul(energy,new Vector3d()));
 
@@ -138,7 +155,7 @@ public class Renderer extends JPanel{
 
             // TODO: Create a better system for hemisphere sampling.
             ray.origin = load.hitPosition.add(load.normal.mul(0.0001, new Vector3d()));
-            Vector3d randomVec = new Vector3d(1 - Math.random()*load.sphere.roughness,1 - Math.random()*load.sphere.roughness,1 - Math.random()*load.sphere.roughness);
+            Vector3d randomVec = new Vector3d(1 - Math.random()*load.sphere.material.roughness,1 - Math.random()*load.sphere.material.roughness,1 - Math.random()*load.sphere.material.roughness);
             ray.direction = ray.direction.reflect(randomVec.mul(load.normal).normalize(), new Vector3d());
         }
 

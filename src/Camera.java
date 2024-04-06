@@ -68,7 +68,6 @@ public class Camera {
 
         for(int y = 0; y < viewPortY; y++){
             for(int x = 0; x < viewPortX; x++){
-                // [-1,1] space
                 Vector2d coords = new Vector2d((float)x/viewPortX, (float)y/viewPortY);
                 coords = coords.mul(2.0f, new Vector2d());
                 coords = coords.sub(new Vector2d(1,1), new Vector2d());
