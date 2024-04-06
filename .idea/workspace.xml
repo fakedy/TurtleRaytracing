@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c55e202f-4afc-4a9d-8cdf-7a3740056873" name="Changes" comment="Fixed eventlistener for window resize to fix performance and dumb code.">
+    <list default="true" id="c55e202f-4afc-4a9d-8cdf-7a3740056873" name="Changes" comment="Using fillrect istead of drawrect for massive performance gain.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Renderer.java" afterDir="false" />
     </list>
@@ -118,7 +118,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712362206636</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Using fillrect istead of drawrect for massive performance gain.">
+      <option name="closed" value="true" />
+      <created>1712362841974</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1712362841974</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -138,7 +146,8 @@
     <MESSAGE value="Creating my own math library is starting to become very painful." />
     <MESSAGE value="Ditched my own math library and pretty much did too much to comment here." />
     <MESSAGE value="Fixed eventlistener for window resize to fix performance and dumb code." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed eventlistener for window resize to fix performance and dumb code." />
+    <MESSAGE value="Using fillrect istead of drawrect for massive performance gain." />
+    <option name="LAST_COMMIT_MESSAGE" value="Using fillrect istead of drawrect for massive performance gain." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

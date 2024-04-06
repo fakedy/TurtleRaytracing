@@ -24,7 +24,8 @@ public class Renderer extends JPanel{
     private int viewPortSizeX;
     private int viewPortSizeY;
 
-    Vector3d[] Image;
+    private Vector3f[] accumilatedImage;
+    private int frameIndex = 1;
 
     Renderer(int width, int height){
 
@@ -34,6 +35,10 @@ public class Renderer extends JPanel{
         aspectRatio = (float)viewPortSizeX / (float)viewPortSizeY;
         camera = new Camera(cameraPos, 45, aspectRatio);
         camera.updateCamera(aspectRatio, viewPortSizeX, viewPortSizeY);
+        accumilatedImage = new Vector3f[viewPortSizeX+viewPortSizeY*viewPortSizeX];
+        for(int i = 0; i < viewPortSizeX+viewPortSizeY*viewPortSizeX; i++){
+            accumilatedImage[i] = new Vector3f(0);
+        }
 
         spheres.add(new Sphere(new Vector3d(-5,-5.0,0.0),4.6f, new Vector3d(255,77,0)));
         spheres.add(new Sphere(new Vector3d(0,5.0,0.0),4.6f, new Vector3d(51,77,255)));
@@ -48,7 +53,7 @@ public class Renderer extends JPanel{
         Vector3d position;
         float radius;
         Vector3d color;
-        float roughness = 0.1f;
+        float roughness = 0.7f;
         float metallic = 0.0f;
 
         Sphere(Vector3d position, float radius, Vector3d color){
@@ -67,9 +72,15 @@ public class Renderer extends JPanel{
         for(int y = 0; y < viewPortSizeY; y++){
             for(int x = 0; x < viewPortSizeX; x++){
                 Vector3f cvec = rayGen(x, y);
-                Color color = new Color((int)cvec.x, (int)cvec.y, (int)cvec.z);
+                accumilatedImage[x+y*viewPortSizeX].add(cvec);
+                Vector3f stored = accumilatedImage[x+y*viewPortSizeX];
+                stored = stored.div(frameIndex, new Vector3f());
+
+
+                Color color = new Color((int)stored.x, (int)stored.y, (int)stored.z);
                 g.setColor(color);
                 g.fillRect(x,y,1,1);
+
             }
         }
 
@@ -79,6 +90,7 @@ public class Renderer extends JPanel{
         g.setFont(new Font(g.getFont().getFontName(), Font.PLAIN, 20));
         g.drawString(String.valueOf(elapsed) + " ms", 20, 20);
         repaint();
+        frameIndex++;
     }
 
     public void shouldResize(){
@@ -86,6 +98,11 @@ public class Renderer extends JPanel{
         viewPortSizeY = newSizeY;
         aspectRatio = (float)viewPortSizeX / (float)viewPortSizeY;
         camera.updateCamera(aspectRatio, viewPortSizeX, viewPortSizeY);
+        accumilatedImage = new Vector3f[viewPortSizeX+viewPortSizeY*viewPortSizeX];
+        for(int i = 0; i < viewPortSizeX+viewPortSizeY*viewPortSizeX; i++){
+            accumilatedImage[i] = new Vector3f(0);
+        }
+        frameIndex = 1;
     }
 
 
@@ -98,7 +115,7 @@ public class Renderer extends JPanel{
         Vector3d finalColor = new Vector3d(0,0,0);
         float energy = 1.0f;
 
-        for(int bounce = 0; bounce < 2; bounce++){
+        for(int bounce = 0; bounce < 5; bounce++){
             HitPayload load = traceRay(ray);
             if(load.hitDistance < 0){
                 finalColor.add(bgColor.mul(energy, new Vector3d()));
