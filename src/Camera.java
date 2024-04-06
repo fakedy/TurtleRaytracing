@@ -46,7 +46,7 @@ public class Camera {
         this.viewPortY = height;
         moved = true;
         if(moved){
-            directionVectors = new Vector3d[viewPortX + viewPortY * viewPortX];
+            directionVectors = new Vector3d[viewPortX * viewPortY];
             calculateProjectionMatrices();
             calculateViewMatrices();
             calculateDirectionVectors();
